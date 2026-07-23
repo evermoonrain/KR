@@ -1,4 +1,4 @@
-name: OMNI KR STOCK SCANNER
+name: KR STOCK
 
 on:
   workflow_dispatch:
