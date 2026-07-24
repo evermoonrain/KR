@@ -1,4 +1,4 @@
-name: KR STOCK
+name: 한국 주식스캐너
 
 on:
   workflow_dispatch:
