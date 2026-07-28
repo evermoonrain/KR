@@ -50,6 +50,7 @@ class ScanResult:
     close: float
     total_score: float
     grade: str
+    gated: bool = False
     steps: List[StepResult] = field(default_factory=list)
 
     def step_dict(self) -> Dict[str, StepResult]:
@@ -60,6 +61,7 @@ class ScanResult:
 # 단계별 필터 함수
 # 각 함수는 row(마지막 시점) + 직전 비교를 위해 tail DataFrame을 받는다.
 # ------------------------------------------------------------
+
 
 def step_volume(df: pd.DataFrame, params: dict) -> Tuple[bool, float, str]:
     ratio = df["vol_surge"].iloc[-1]
@@ -246,6 +248,9 @@ def evaluate_stock(code: str, name: str, market: str, ticker: str, df: pd.DataFr
             detail=detail,
         ))
 
+    # gated: 모든 스텝을 통과했을 때 True (main.py 에서 기대하는 속성)
+    gated = all(s.passed for s in steps)
+
     total_score = round(total_score, 2)
     grade = get_grade(total_score)
 
@@ -259,6 +264,7 @@ def evaluate_stock(code: str, name: str, market: str, ticker: str, df: pd.DataFr
         close=close,
         total_score=total_score,
         grade=grade,
+        gated=gated,
         steps=steps,
     )
 
