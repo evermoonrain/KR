@@ -80,6 +80,8 @@ def run(no_telegram: bool = False, refresh_universe: bool = False, limit: int = 
             logger.warning(f"[{stock.ticker}] 평가 실패: {e}")
 
     logger.info(f"평가 완료: {len(results)}개 종목")
+    gated_count = sum(1 for r in results if r.gated)
+    logger.info(f"  ㄴ 월봉RSI 게이트 미통과로 9단계 지표 계산 생략: {gated_count}개")
 
     # 4. 필터링 + 정렬
     ranked = filter_and_rank(results)
