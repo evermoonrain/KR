@@ -116,6 +116,41 @@ def rsi(df: pd.DataFrame, period: int = 14) -> pd.Series:
 
 
 # ------------------------------------------------------------
+# 월봉 RSI (일봉 데이터를 월말 종가로 리샘플링 후 계산)
+# ------------------------------------------------------------
+def monthly_rsi(df: pd.DataFrame, period: int = 14) -> float:
+    """
+    일봉 df를 월말 종가로 리샘플링하여 월봉 RSI를 계산하고 마지막 값을 반환한다.
+    인덱스를 DatetimeIndex로 변환하여 안전하게 resample을 수행한다.
+    데이터가 부족하거나 계산 불가 시 np.nan을 반환한다.
+    """
+    try:
+        work_df = df.copy()
+        
+        # DatetimeIndex 보장
+        if not isinstance(work_df.index, pd.DatetimeIndex):
+            if "Date" in work_df.columns:
+                work_df.index = pd.to_datetime(work_df["Date"])
+            else:
+                work_df.index = pd.to_datetime(work_df.index)
+
+        # 월말 종가 리샘플링 (pandas 버전 호환성 지원)
+        try:
+            monthly_close = work_df["Close"].resample("ME").last().dropna()  # pandas >= 2.2
+        except (ValueError, AttributeError):
+            monthly_close = work_df["Close"].resample("M").last().dropna()   # pandas < 2.2
+
+        if len(monthly_close) < period + 1:
+            return np.nan
+
+        monthly_df = pd.DataFrame({"Close": monthly_close})
+        monthly_rsi_series = rsi(monthly_df, period)
+        return float(monthly_rsi_series.iloc[-1])
+    except Exception:
+        return np.nan
+
+
+# ------------------------------------------------------------
 # ADX
 # ------------------------------------------------------------
 def adx(df: pd.DataFrame, period: int = 14):
