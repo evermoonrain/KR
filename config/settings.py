@@ -41,7 +41,7 @@ FILTER_PIPELINE = [
 # ============================================================
 PARAMS = {
     "volume_lookback": 20,        # 거래량 평균 비교 기간
-    "volume_surge_ratio": 1.5,    # 평균 대비 거래량 급증 기준배수
+    "volume_surge_ratio": 1.2,    # 평균 대비 거래량 급증 기준배수
     "obv_lookback": 20,           # OBV 추세 판단 기간
     "vwap_lookback": 20,          # VWAP 계산용 lookback(일봉 누적 근사)
     "mfi_period": 14,
@@ -59,7 +59,9 @@ PARAMS = {
     "adx_trend_threshold": 25,
     "bb_period": 20,
     "bb_std": 2,
-    "price_history_days": 180,    # yfinance 다운로드 기간
+    "price_history_days": "5y",   # yfinance 다운로드 기간 (월봉 RSI 계산을 위해 5년치)
+    "monthly_rsi_period": 14,     # 월봉 RSI 기간
+    "monthly_rsi_gate_max": 40,   # 월봉 RSI가 이 값 이하인 종목만 통과 (게이트 필터, 점수 미반영)
 }
 
 # ============================================================
