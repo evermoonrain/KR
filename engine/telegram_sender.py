@@ -39,7 +39,7 @@ def build_summary_message(results: List[ScanResult], scan_date: str) -> str:
     grade_emoji = {"S": "🟡", "A": "🟢", "B": "🔵", "C": "🟠"}
 
     lines = []
-    lines.append(f"📊 *한국 주식 스캐너* {_escape_md('[KR] ' + scan_date)}")
+    lines.append(f"📊 *국장스캐너* {_escape_md('[KR] ' + scan_date)}")
     lines.append(f"💻 *대상: KOSPI200 \\+ KOSDAQ100")
     lines.append("")
 
