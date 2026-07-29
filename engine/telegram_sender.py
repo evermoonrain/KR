@@ -40,7 +40,7 @@ def build_summary_message(results: List[ScanResult], scan_date: str) -> str:
 
     lines = []
     lines.append(f"📊 *한국 주식 스캐너* {_escape_md('[KR] ' + scan_date)}")
-    lines.append("대상: KOSPI200 \\+ KOSDAQ100")
+    lines.append("    대상: KOSPI200 \\+ KOSDAQ100")
     lines.append("")
 
     grade_counts = {}
@@ -48,7 +48,7 @@ def build_summary_message(results: List[ScanResult], scan_date: str) -> str:
         grade_counts[r.grade] = grade_counts.get(r.grade, 0) + 1
     dist = "  ".join([f"{g}:{n}" for g, n in sorted(grade_counts.items())])
     lines.append(f"🏆 *TOP {min(TELEGRAM_TOP_N, len(results))} 종목*")
-    lines.append(f"등급분포: {_escape_md(dist)}  \\(총 {len(results)}건\\)")    
+    lines.append(f"    등급분포 : {_escape_md(dist)}  \\(총 {len(results)}건\\)")    
     lines.append("")
 
     for i, r in enumerate(results[:TELEGRAM_TOP_N], start=1):
