@@ -61,7 +61,7 @@ PARAMS = {
     "bb_std": 2,
     "price_history_days": "5y",   # yfinance 다운로드 기간 (월봉 RSI 계산을 위해 5년치)
     "monthly_rsi_period": 14,     # 월봉 RSI 기간
-    "monthly_rsi_gate_max": 40,   # 월봉 RSI가 이 값 이하인 종목만 통과 (게이트 필터, 점수 미반영)
+    "monthly_rsi_gate_max": 30,   # 월봉 RSI가 이 값 이하인 종목만 통과 (게이트 필터, 점수 미반영)
 }
 
 # ============================================================
